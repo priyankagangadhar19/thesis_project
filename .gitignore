@@ -16,5 +16,9 @@ application/config/routes.php
 application/config/database.php
 
 application/config/database.php
+<<<<<<< Updated upstream
 .htaccess
+=======
+
+>>>>>>> Stashed changes
 application/config/database.php
