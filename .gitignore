@@ -16,3 +16,5 @@ application/config/routes.php
 application/config/database.php
 
 application/config/database.php
+.htaccess
+application/config/database.php
