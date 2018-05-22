@@ -51,3 +51,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'home';
 $route['(:any)'] = 'home/$1';
+$route['admin'] = '/admin/index';
