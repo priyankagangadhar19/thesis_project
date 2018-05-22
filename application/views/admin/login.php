@@ -38,7 +38,7 @@
                     <form role="form" method="post" action="<?php echo base_url('admin/dashboard'); ?>">
                         <fieldset>
                             <div class="form-group"  >
-                                <input class="form-control" placeholder="E-mail" name="username" type="text" autofocus>
+                                <input class="form-control" placeholder="Username" name="username" type="text" autofocus>
                             </div>
                             <div class="form-group">
                                 <input class="form-control" placeholder="Password" name="user_password" type="password" value="">
