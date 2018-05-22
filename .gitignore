@@ -12,3 +12,5 @@ application/config/config.php
 application/config/routes.php
 
 application/config/routes.php
+
+application/config/database.php
