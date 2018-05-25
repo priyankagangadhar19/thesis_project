@@ -15,13 +15,21 @@
                     <h3 class="panel-title">Admin Login</h3>
                 </div>
                 <?php
-              $success_msg= $this->session->flashdata('success_msg');
-              $error_msg= $this->session->flashdata('error_msg');
+              $success_msg = $this->session->flashdata('success_msg');
+              $warning_msg = $this->session->flashdata('warning_msg');
+              $error_msg = $this->session->flashdata('error_msg');
 
                   if($success_msg){
                     ?>
                     <div class="alert alert-success">
                       <?php echo $success_msg; ?>
+                    </div>
+                  <?php
+                  }
+                  if($warning_msg){
+                      ?>
+                    <div class="alert alert-warning">
+                      <?php echo $warning_msg; ?>
                     </div>
                   <?php
                   }
@@ -35,7 +43,7 @@
                   ?>
 
                 <div class="panel-body">
-                    <form role="form" method="post" action="<?php echo base_url('admin/dashboard'); ?>">
+                    <form role="form" method="post" action="<?php echo base_url('admin/loginGate'); ?>">
                         <fieldset>
                             <div class="form-group"  >
                                 <input class="form-control" placeholder="Username" name="username" type="text" autofocus>

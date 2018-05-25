@@ -15,4 +15,65 @@ class Admin_Model extends CI_Model {
             return false;
         }
     }
+    
+    
+    public function reqCategListJson(){
+        
+        $this->db->select('*');
+        $this->db->from('req_categ_list');
+        
+        if($query=$this->db->get())
+        {
+            return ($query->result());
+        }
+        else{
+            return false;
+        }
+        
+    }
+    
+    public function reqListJson(){
+        
+        $this->db->select('*');
+        $this->db->from('req_list');
+        
+        if($query=$this->db->get())
+        {
+            return json_encode($query->result());
+        }
+        else{
+            return false;
+        }
+        
+    }
+    
+    public function jobCategJson(){
+        
+        $this->db->select('*');
+        $this->db->from('job_category');
+        
+        if($query=$this->db->get())
+        {
+            return json_encode($query->result());
+        }
+        else{
+            return false;
+        }
+        
+    }
+    
+    public function jobRolesJson(){
+        
+        $this->db->select('*');
+        $this->db->from('job_roles');
+        
+        if($query=$this->db->get())
+        {
+            return json_encode($query->result());
+        }
+        else{
+            return false;
+        }
+        
+    }
 } 
