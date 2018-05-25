@@ -32,14 +32,14 @@ class Admin extends CI_Controller {
         $response = $this->Admin_Model->login($user_login['username'],$user_login['user_password']);
         if($response)
         {
-            $this->session->set_userdata('user_id',$data['id']);
-            $this->session->set_userdata('user_email',$data['email']);
-            $this->session->set_userdata('username',$data['user_name']);
-            $this->session->set_userdata('user_name',$data['name']);
-            $this->session->set_userdata('user_role',$data['role']);
+            $this->session->set_userdata('user_id',$response['id']);
+            $this->session->set_userdata('user_email',$response['email']);
+            $this->session->set_userdata('username',$response['user_name']);
+            $this->session->set_userdata('user_name',$response['name']);
+            $this->session->set_userdata('user_role',$response['role']);
             $this->session->set_userdata('user_session',"active");
             
-            
+            //print_r($user_login); exit;
             return redirect('admin/dashboard');
             
         }
