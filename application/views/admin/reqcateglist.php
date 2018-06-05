@@ -2,16 +2,25 @@
 <html>
 <head>
 	<title>Requirements Category List</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
 	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
 	
-	<link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+	
+	<script src="http://cdn.jsdelivr.net/cookiejs/0.1/cookie.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/storagejs/2.0/storage.js"></script>
 </head>
 <body>
+
+<style>
+.btn {
+    margin: 0px 0px 0px 5px;
+}
+</style>
 
 
 <div class="container">
@@ -24,6 +33,7 @@
 				<th>ID</th>
 				<th>Name</th>
 				<th>Description</th>
+				<th>Status</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -33,7 +43,9 @@
 		</tbody>
 	</table>
 </div>
-    <div class="container">
+
+
+<!--     <div class="container">
 
       <h1>X-editable starter template</h1>
 
@@ -48,7 +60,7 @@
       </div>
 
       
-    </div>
+    </div> -->
 
 
 </body>
@@ -61,6 +73,11 @@ $(document).ready(function() {
             url : "reqCategListJson",
             type : 'GET'
         },
+        dom: 'l<"toolbar">frtip',
+        initComplete: function(){
+           $("div.toolbar")
+              .html(' <button type="button" class="btn btn-info pull-right">Add Item</button> ');           
+        }
     });
 
   //toggle `popup` / `inline` mode
@@ -86,8 +103,27 @@ $(document).ready(function() {
         ,url: '/post'
         */
     });
-});
-</script>
 
+    $('#item-list').on('click', '#statusToggle', function (){
+    	
+        $.ajax({
+            type: "POST",
+            url: "reqcateglistStatusToggle",
+            data: { 
+                id: $(this).attr('itemId'),
+                status: $(this).attr('action')
+            },
+            success: function(result) {
+                if(result == 'true'){location.reload();}
+                else{alert('Error while updating data!');}
+            },
+            error: function(result) {
+                alert('AJAX error!');
+            }
+        });
+    });
+});
+
+</script>
 
 </html>
