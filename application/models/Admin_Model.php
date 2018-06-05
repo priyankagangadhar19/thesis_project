@@ -35,16 +35,26 @@ class Admin_Model extends CI_Model {
             $id = $r->id;
             $name = $r->name;
             $description = $r->description;
+            $status = $r->status;
+            
+            if($status == "active"){
+                $fadeTextClass = "font-weight-bold";
+                $toggleStatusButton = ' <button id="statusToggle" type="button" class="btn btn-warning" itemId="'.$id.'" action="disabled">Disable</button> ';
+            }elseif($status == "disabled"){
+                $fadeTextClass = "text-muted";
+                $toggleStatusButton = ' <button id="statusToggle" type="button" class="btn btn-success" itemId="'.$id.'" action="active">Activate</button> ';
+            }
             
             $data[] = array(
-                $id,
+                '<i class="'.$fadeTextClass.'"><strong>'.$id.'</strong></i>',
                 
-                $name,
+                '<i class="'.$fadeTextClass.'"><strong>'.$name.'</strong></i>',
                 
-                $description,
+                '<i class="'.$fadeTextClass.'"><strong>'.$description.'</strong></i>',
                 
-                '<button type="button" class="btn btn-warning">Disable</button>
-                 <button type="button" class="btn btn-danger">Delete</button>'
+                '<i class=""><strong>'.$status.'</strong></i>',
+                
+                $toggleStatusButton
             );
         }
         
@@ -102,6 +112,22 @@ class Admin_Model extends CI_Model {
             return json_encode($query->result());
         }
         else{
+            return false;
+        }
+        
+    }
+    
+    public function reqcateglistStatusToggle($id, $status) {
+        $data = array(
+            'status'   => $status
+        );
+        
+        $this->db->where('id', $id);
+        $update = $this->db->update('req_categ_list ', $data);
+
+        if ($update) {
+            return true;
+        }else{
             return false;
         }
         

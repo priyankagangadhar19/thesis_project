@@ -141,4 +141,23 @@ class Admin extends CI_Controller {
         exit();
         
     }
+    
+    public function reqcateglistStatusToggle(){
+        $this->loginCheck();
+        
+        $id = $this->input->post('id');
+        $status = $this->input->post('status');
+        
+        if ($status == "disabled" OR $status == "active") {
+            $response = $this->Admin_Model->reqcateglistStatusToggle($id, $status);
+        }else{
+            $response = "error";
+        }
+        
+        if ($response == true) {
+            echo 'true';
+        }else {
+            echo 'false';
+        }
+    }
 }
