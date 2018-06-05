@@ -106,7 +106,7 @@ class Admin extends CI_Controller {
     public function reqCategListJson(){
         
         $jsonData = $this->Admin_Model->reqCategListJson();
-        echo json_encode($jsonData);
+        echo $jsonData;
         exit();
         
     }
@@ -129,6 +129,16 @@ class Admin extends CI_Controller {
         
         $jsonData = $this->Admin_Model->jobRolesJson();
         return $jsonData;
+        
+    }
+    
+    public function toMD5($value){
+        $this->loginCheck();
+        
+        $md5 = md5($value);
+        
+        echo $md5;
+        exit();
         
     }
 }
