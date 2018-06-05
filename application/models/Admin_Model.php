@@ -19,16 +19,46 @@ class Admin_Model extends CI_Model {
     
     public function reqCategListJson(){
         
-        $this->db->select('*');
-        $this->db->from('req_categ_list');
+        $draw = intval($this->input->get("draw"));
+        $start = intval($this->input->get("start"));
+        $length = intval($this->input->get("length"));
         
-        if($query=$this->db->get())
-        {
-            return ($query->result());
+        
+        $query = $this->db->get("req_categ_list");
+        
+        
+        $data = [];
+        
+        
+        foreach($query->result() as $r) {
+            
+            $id = $r->id;
+            $name = $r->name;
+            $description = $r->description;
+            
+            $data[] = array(
+                $id,
+                
+                $name,
+                
+                $description,
+                
+                '<button type="button" class="btn btn-warning">Disable</button>
+                 <button type="button" class="btn btn-danger">Delete</button>'
+            );
         }
-        else{
-            return false;
-        }
+        
+        
+        $result = array(
+            "draw" => $draw,
+            "recordsTotal" => $query->num_rows(),
+            "recordsFiltered" => $query->num_rows(),
+            "data" => $data
+        );
+        
+        
+        return json_encode($result);
+        
         
     }
     
