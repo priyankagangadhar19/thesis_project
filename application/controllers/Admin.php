@@ -153,12 +153,15 @@ class Admin extends CI_Controller {
         }else{
             $response = "error";
             echo $response;
+            exit();
         }
         
         if ($response == true) {
             echo 'true';
+            exit();
         }else {
             echo 'false';
+            exit();
         }
     }
 }
