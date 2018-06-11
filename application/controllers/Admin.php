@@ -104,6 +104,7 @@ class Admin extends CI_Controller {
     
     
     public function reqCategListJson(){
+        $this->loginCheck();
         
         $jsonData = $this->Admin_Model->reqCategListJson();
         echo $jsonData;
@@ -119,16 +120,19 @@ class Admin extends CI_Controller {
     }
     
     public function jobCategJson(){
+        $this->loginCheck();
         
         $jsonData = $this->Admin_Model->jobCategJson();
-        return $jsonData;
-        
+        echo $jsonData;
+        exit();
     }
     
     public function jobRolesJson(){
+        $this->loginCheck();
         
         $jsonData = $this->Admin_Model->jobRolesJson();
-        return $jsonData;
+        echo $jsonData;
+        exit();
         
     }
     
@@ -193,6 +197,29 @@ class Admin extends CI_Controller {
             echo 'false';
         }
         
+    }
+    
+    public function jobcategStatusToggle(){
+        $this->loginCheck();
+        
+        $id = $this->input->post('id');
+        $status = $this->input->post('status');
+        
+        if ($status == "disabled" OR $status == "active") {
+            $response = $this->Admin_Model->jobcategStatusToggle($id, $status);
+        }else{
+            $response = "error";
+            echo $response;
+            exit();
+        }
+        
+        if ($response == true) {
+            echo 'true';
+            exit();
+        }else {
+            echo 'false';
+            exit();
+        }
     }
     
 }

@@ -93,32 +93,120 @@ class Admin_Model extends CI_Model {
     }
     
     public function jobCategJson(){
+        $draw = intval($this->input->get("draw"));
+        $start = intval($this->input->get("start"));
+        $length = intval($this->input->get("length"));
         
-        $this->db->select('*');
-        $this->db->from('job_category');
         
-        if($query=$this->db->get())
-        {
-            return json_encode($query->result());
+        $query = $this->db->get("job_category");
+        
+        
+        $data = [];
+        $number = 1;
+        
+        
+        foreach($query->result() as $r) {
+            
+            $id = $r->id;
+            $category = $r->category;
+            $description = $r->description;
+            $status = $r->status;
+            
+            if($status == "active"){
+                $fadeTextClass = "font-weight-bold";
+                $toggleStatusButton = ' <button id="statusToggleButton" type="button" class="btn btn-warning" itemId="'.$id.'" action="disabled">Disable</button> ';
+            }elseif($status == "disabled"){
+                $fadeTextClass = "text-muted";
+                $toggleStatusButton = ' <button id="statusToggleButton" type="button" class="btn btn-success" itemId="'.$id.'" action="active">Activate</button> ';
+            }
+            
+            $data[] = array(
+                '<i class="'.$fadeTextClass.'"><strong>'.$number.'</strong></i>',
+                
+                '<i class="'.$fadeTextClass.'"><strong>'.$id.'</strong></i>',
+                
+                '<i class="'.$fadeTextClass.'"><strong>'.$category.'</strong></i>',
+                
+                '<i class="'.$fadeTextClass.'"><strong>'.$description.'</strong></i>',
+                
+                '<i class=""><strong>'.$status.'</strong></i>',
+                
+                $toggleStatusButton
+            );
+            
+            $number++;
         }
-        else{
-            return false;
-        }
         
+        
+        $result = array(
+            "draw" => $draw,
+            "recordsTotal" => $query->num_rows(),
+            "recordsFiltered" => $query->num_rows(),
+            "data" => $data
+        );
+        
+        
+        return json_encode($result);
+       
     }
     
     public function jobRolesJson(){
         
-        $this->db->select('*');
-        $this->db->from('job_roles');
         
-        if($query=$this->db->get())
-        {
-            return json_encode($query->result());
+        $draw = intval($this->input->get("draw"));
+        $start = intval($this->input->get("start"));
+        $length = intval($this->input->get("length"));
+        
+        
+        $query = $this->db->get("req_categ_list");
+        
+        
+        $data = [];
+        $number = 1;
+        
+        
+        foreach($query->result() as $r) {
+            
+            $id = $r->id;
+            $name = $r->name;
+            $description = $r->description;
+            $status = $r->status;
+            
+            if($status == "active"){
+                $fadeTextClass = "font-weight-bold";
+                $toggleStatusButton = ' <button id="statusToggleButton" type="button" class="btn btn-warning" itemId="'.$id.'" action="disabled">Disable</button> ';
+            }elseif($status == "disabled"){
+                $fadeTextClass = "text-muted";
+                $toggleStatusButton = ' <button id="statusToggleButton" type="button" class="btn btn-success" itemId="'.$id.'" action="active">Activate</button> ';
+            }
+            
+            $data[] = array(
+                '<i class="'.$fadeTextClass.'"><strong>'.$number.'</strong></i>',
+                
+                '<i class="'.$fadeTextClass.'"><strong>'.$id.'</strong></i>',
+                
+                '<i class="'.$fadeTextClass.'"><strong>'.$name.'</strong></i>',
+                
+                '<i class="'.$fadeTextClass.'"><strong>'.$description.'</strong></i>',
+                
+                '<i class=""><strong>'.$status.'</strong></i>',
+                
+                $toggleStatusButton
+            );
+            
+            $number++;
         }
-        else{
-            return false;
-        }
+        
+        
+        $result = array(
+            "draw" => $draw,
+            "recordsTotal" => $query->num_rows(),
+            "recordsFiltered" => $query->num_rows(),
+            "data" => $data
+        );
+        
+        
+        return json_encode($result);
         
     }
     
@@ -152,6 +240,22 @@ class Admin_Model extends CI_Model {
         }else{
             return false;
         }
+    }
+    
+    public function jobcategStatusToggle($id, $status) {
+        $data = array(
+            'status'   => $status
+        );
+        
+        $this->db->where('id', $id);
+        $update = $this->db->update('job_category', $data);
+        
+        if ($update) {
+            return true;
+        }else{
+            return false;
+        }
+        
     }
     
     
