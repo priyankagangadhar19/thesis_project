@@ -79,16 +79,57 @@ class Admin_Model extends CI_Model {
     
     public function reqListJson(){
         
-        $this->db->select('*');
-        $this->db->from('req_list');
+        $draw = intval($this->input->get("draw"));
+        $start = intval($this->input->get("start"));
+        $length = intval($this->input->get("length"));
         
-        if($query=$this->db->get())
-        {
-            return json_encode($query->result());
+        
+        $query = $this->db->get("req_list");
+        
+        
+        $data = [];
+        $number = 1;
+        
+        
+        foreach($query->result() as $r) {
+            
+            $id = $r->id;
+            $name = $r->name;
+            $status = $r->status;
+            
+            if($status == "active"){
+                $fadeTextClass = "font-weight-bold";
+                $toggleStatusButton = ' <button id="statusToggleButton" type="button" class="btn btn-warning" itemId="'.$id.'" action="disabled">Disable</button> ';
+            }elseif($status == "disabled"){
+                $fadeTextClass = "text-muted";
+                $toggleStatusButton = ' <button id="statusToggleButton" type="button" class="btn btn-success" itemId="'.$id.'" action="active">Activate</button> ';
+            }
+            
+            $data[] = array(
+                '<i class="'.$fadeTextClass.'"><strong>'.$number.'</strong></i>',
+                
+                '<i class="'.$fadeTextClass.'"><strong>'.$id.'</strong></i>',
+                
+                '<i class="'.$fadeTextClass.'"><strong>'.$name.'</strong></i>',
+                                
+                '<i class=""><strong>'.$status.'</strong></i>',
+                
+                $toggleStatusButton
+            );
+            
+            $number++;
         }
-        else{
-            return false;
-        }
+        
+        
+        $result = array(
+            "draw" => $draw,
+            "recordsTotal" => $query->num_rows(),
+            "recordsFiltered" => $query->num_rows(),
+            "data" => $data
+        );
+        
+        
+        return json_encode($result);
         
     }
     
@@ -158,7 +199,7 @@ class Admin_Model extends CI_Model {
         $length = intval($this->input->get("length"));
         
         
-        $query = $this->db->get("req_categ_list");
+        $query = $this->db->get("job_roles");
         
         
         $data = [];
@@ -168,7 +209,8 @@ class Admin_Model extends CI_Model {
         foreach($query->result() as $r) {
             
             $id = $r->id;
-            $name = $r->name;
+            $jobCategoryId = $r->job_category_id;
+            $name = $r->role;
             $description = $r->description;
             $status = $r->status;
             
@@ -184,6 +226,8 @@ class Admin_Model extends CI_Model {
                 '<i class="'.$fadeTextClass.'"><strong>'.$number.'</strong></i>',
                 
                 '<i class="'.$fadeTextClass.'"><strong>'.$id.'</strong></i>',
+                
+                '<i class="'.$fadeTextClass.'"><strong>'.$jobCategoryId.'</strong></i>',
                 
                 '<i class="'.$fadeTextClass.'"><strong>'.$name.'</strong></i>',
                 
@@ -258,5 +302,86 @@ class Admin_Model extends CI_Model {
         
     }
     
+    public function addJobCategItem($name, $description, $status){
+        
+        $data = array(
+            'category'    => $name,
+            'description' => $description,
+            'status'      => $status
+        );
+        
+        $insert = $this->db->insert('job_category', $data);
+        
+        if ($insert) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public function jobrolesStatusToggle($id, $status) {
+        $data = array(
+            'status'   => $status
+        );
+        
+        $this->db->where('id', $id);
+        $update = $this->db->update('job_roles', $data);
+        
+        if ($update) {
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+    
+    public function addJobRolesItem($name, $description, $status){
+        
+        $data = array(
+            'category'    => $name,
+            'description' => $description,
+            'status'      => $status
+        );
+        
+        $insert = $this->db->insert('job_roles', $data);
+        
+        if ($insert) {
+            return true;
+        }else{
+            return false;
+        }        
+    }
+    
+    public function reqlistStatusToggle($id, $status) {
+        $data = array(
+            'status'   => $status
+        );
+        
+        $this->db->where('id', $id);
+        $update = $this->db->update('req_list', $data);
+        
+        if ($update) {
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+    
+    public function addReqListItem($name, $description, $status){
+        $data = array(
+            'name'        => $name,
+            'description' => $description,
+            'status'      => $status
+        );
+        
+        $insert = $this->db->insert('req_list', $data);
+        
+        if ($insert) {
+            return true;
+        }else{
+            return false;
+        }
+    }
     
 } 

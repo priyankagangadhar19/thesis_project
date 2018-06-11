@@ -117,7 +117,7 @@ $(document).ready(function() {
         
     	$.ajax({
             type: "POST",
-            url: "addReqCategItem",
+            url: "addJobCategItem",
             data: { 
             	itemName: itemName,
             	itemDescription: itemDescription,
@@ -126,12 +126,12 @@ $(document).ready(function() {
             success: function(result) {
                 if(result == 'true'){
                     			$("#success_msg").show();
-            					$("#success_msg").fadeTo(3000, 500).slideUp(500, function(){
+            					$("#success_msg").fadeTo(1000, 500).slideUp(500, function(){
                					$("#success_msg").slideUp(500);
            							 });
             					setTimeout( function(){ 
-            						location.reload();
-            					  }  , 4000 );
+            						//location.reload();
+            					  }  , 2000 );
           					  return true;
       			}
                 else{alert('Error while updating data!');}

@@ -114,8 +114,11 @@ class Admin extends CI_Controller {
     
     public function reqListJson(){
         
+        $this->loginCheck();
+        
         $jsonData = $this->Admin_Model->reqListJson();
-        return $jsonData;
+        echo $jsonData;
+        exit();
         
     }
     
@@ -220,6 +223,142 @@ class Admin extends CI_Controller {
             echo 'false';
             exit();
         }
+    }
+    
+    public function addJobCategItem(){
+        $this->loginCheck();
+        
+        $name = "";
+        $description = "";
+        $status = "";
+        
+        $name = $this->input->post('itemName');
+        $description = $this->input->post('itemDescription');
+        $status = $this->input->post('itemStatus');
+        
+        if ($name !== "") {
+            if($status == "active" || $status == "disabled"){
+                $response = $this->Admin_Model->addJobCategItem($name, $description, $status);
+            }else{
+                $response = "error: name can't be empty and status should be either 'active' or 'disabled'!";
+            }
+            
+        }else{
+            $response = "error: name can't be empty and status should be either 'active' or 'disabled'!";
+        }
+        
+        if ($response === true) {
+            echo 'true';
+        }else {
+            echo 'false';
+        }
+        
+    }
+    
+    public function jobrolesStatusToggle(){
+        $this->loginCheck();
+        
+        $id = $this->input->post('id');
+        $status = $this->input->post('status');
+        
+        if ($status == "disabled" OR $status == "active") {
+            $response = $this->Admin_Model->jobrolesStatusToggle($id, $status);
+        }else{
+            $response = "error";
+            echo $response;
+            exit();
+        }
+        
+        if ($response == true) {
+            echo 'true';
+            exit();
+        }else {
+            echo 'false';
+            exit();
+        }
+    }
+    
+    public function addJobRolesItem(){
+        $this->loginCheck();
+        
+        $name = "";
+        $description = "";
+        $status = "";
+        
+        $name = $this->input->post('itemName');
+        $description = $this->input->post('itemDescription');
+        $status = $this->input->post('itemStatus');
+        
+        if ($name !== "") {
+            if($status == "active" || $status == "disabled"){
+                $response = $this->Admin_Model->addJobCategItem($name, $description, $status);
+            }else{
+                $response = "error: name can't be empty and status should be either 'active' or 'disabled'!";
+            }
+            
+        }else{
+            $response = "error: name can't be empty and status should be either 'active' or 'disabled'!";
+        }
+        
+        if ($response === true) {
+            echo 'true';
+        }else {
+            echo 'false';
+        }
+        
+    }
+    
+    public function reqlistStatusToggle(){
+        $this->loginCheck();
+        
+        $id = $this->input->post('id');
+        $status = $this->input->post('status');
+        
+        if ($status == "disabled" OR $status == "active") {
+            $response = $this->Admin_Model->reqlistStatusToggle($id, $status);
+        }else{
+            $response = "error";
+            echo $response;
+            exit();
+        }
+        
+        if ($response == true) {
+            echo 'true';
+            exit();
+        }else {
+            echo 'false';
+            exit();
+        }
+    }
+    
+    public function addReqListItem(){
+        $this->loginCheck();
+        
+        $name = "";
+        $status = "";
+        $description = "";
+        
+        $name = $this->input->post('itemName');
+        $description = $this->input->post('itemDescription');
+        $status = $this->input->post('itemStatus');
+        
+        if ($name !== "") {
+            if($status == "active" || $status == "disabled"){
+                $response = $this->Admin_Model->addReqListItem($name, $description, $status);
+            }else{
+                $response = "error: name can't be empty and status should be either 'active' or 'disabled'!";
+            }
+            
+        }else{
+            $response = "error: name can't be empty and status should be either 'active' or 'disabled'!";
+        }
+        
+        if ($response === true) {
+            echo 'true';
+        }else {
+            echo 'false';
+        }
+        
     }
     
 }
