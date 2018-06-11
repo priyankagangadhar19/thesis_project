@@ -152,12 +152,16 @@ class Admin extends CI_Controller {
             $response = $this->Admin_Model->reqcateglistStatusToggle($id, $status);
         }else{
             $response = "error";
+            echo $response;
+            exit();
         }
         
         if ($response == true) {
             echo 'true';
+            exit();
         }else {
             echo 'false';
+            exit();
         }
     }
     
