@@ -160,4 +160,35 @@ class Admin extends CI_Controller {
             echo 'false';
         }
     }
+    
+    public function addReqCategItem(){
+        $this->loginCheck();
+        
+        $name = "";
+        $description = "";
+        $status = "";
+        
+        $name = $this->input->post('itemName');
+        $description = $this->input->post('itemDescription');
+        $status = $this->input->post('itemStatus');
+        
+        if ($name !== "") {
+            if($status == "active" || $status == "disabled"){
+                $response = $this->Admin_Model->addReqCategItem($name, $description, $status);
+            }else{
+                $response = "error: name can't be empty and status should be either 'active' or 'disabled'!";
+            }
+            
+        }else{
+            $response = "error: name can't be empty and status should be either 'active' or 'disabled'!";
+        }
+        
+        if ($response === true) {
+            echo 'true';
+        }else {
+            echo 'false';
+        }
+        
+    }
+    
 }

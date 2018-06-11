@@ -28,6 +28,7 @@ class Admin_Model extends CI_Model {
         
         
         $data = [];
+        $number = 1;
         
         
         foreach($query->result() as $r) {
@@ -39,13 +40,15 @@ class Admin_Model extends CI_Model {
             
             if($status == "active"){
                 $fadeTextClass = "font-weight-bold";
-                $toggleStatusButton = ' <button id="statusToggle" type="button" class="btn btn-warning" itemId="'.$id.'" action="disabled">Disable</button> ';
+                $toggleStatusButton = ' <button id="statusToggleButton" type="button" class="btn btn-warning" itemId="'.$id.'" action="disabled">Disable</button> ';
             }elseif($status == "disabled"){
                 $fadeTextClass = "text-muted";
-                $toggleStatusButton = ' <button id="statusToggle" type="button" class="btn btn-success" itemId="'.$id.'" action="active">Activate</button> ';
+                $toggleStatusButton = ' <button id="statusToggleButton" type="button" class="btn btn-success" itemId="'.$id.'" action="active">Activate</button> ';
             }
             
             $data[] = array(
+                '<i class="'.$fadeTextClass.'"><strong>'.$number.'</strong></i>',
+                
                 '<i class="'.$fadeTextClass.'"><strong>'.$id.'</strong></i>',
                 
                 '<i class="'.$fadeTextClass.'"><strong>'.$name.'</strong></i>',
@@ -56,6 +59,8 @@ class Admin_Model extends CI_Model {
                 
                 $toggleStatusButton
             );
+            
+            $number++;
         }
         
         
@@ -132,4 +137,22 @@ class Admin_Model extends CI_Model {
         }
         
     }
+    
+    public function addReqCategItem($name, $description, $status){
+        $data = array(
+            'name'        => $name,
+            'description' => $description,
+            'status'      => $status
+        );
+        
+        $insert = $this->db->insert('req_categ_list', $data);
+        
+        if ($insert) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    
 } 
