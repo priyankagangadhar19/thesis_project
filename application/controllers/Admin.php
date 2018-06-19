@@ -10,7 +10,11 @@ class Admin extends CI_Controller {
     }
 
     public function index(){
-        $this->load->view('admin/login');
+        if ($this->session->userdata('user_session') !== "active") {
+            return redirect('admin/login');
+        }else{
+            return redirect('admin/dashboard');
+        }
     }
     
     public function login()

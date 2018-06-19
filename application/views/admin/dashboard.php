@@ -1,13 +1,3 @@
-<?php
-$user_id=$this->session->userdata('user_id');
-
-if(!$user_id){
-    
-    redirect('admin/login');
-}
-
-?>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -29,7 +19,7 @@ if(!$user_id){
 
         </tr>
           <tr>
-            <td>User Name</td>
+            <td>User's Name</td>
             <td><?php echo $this->session->userdata('user_name'); ?></td>
           </tr>
           <tr>
@@ -48,6 +38,38 @@ if(!$user_id){
 
 
     </div>
+    
+    <div class="col-md-4">
+    <table class="table table-bordered table-striped">
+
+
+        <tr>
+          <th colspan="2"><h4 class="text-center">Menu Items</h3></th>
+
+        </tr>
+          <tr>
+            <td>Job Category</td>
+            <td><a href="<?php echo base_url()."/admin/jobcateg";?>">link</a></td>
+          </tr>
+          <tr>
+            <td>Job Role</td>
+            <td><a href="<?php echo base_url()."/admin/jobroles";?>">link</a></td>
+          </tr>
+          <tr>
+            <td>Req Categ List</td>
+            <td><a href="<?php echo base_url()."/admin/reqcateglist";?>">link</a></td>
+          </tr>
+          <tr>
+            <td>Req List</td>
+            <td><a href="<?php echo base_url()."/admin/reqlist";?>">link</a></td>
+          </tr>
+          <tr>
+            <td>Add Data</td>
+            <td><a href="<?php echo base_url()."/admin/adddata";?>">link</a></td>
+          </tr>
+      </table>
+    </div>
+    
   </div>
 <a href="<?php echo base_url('admin/logout');?>" >  <button type="button" class="btn-primary">Logout</button></a>
 </div>
