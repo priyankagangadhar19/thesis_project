@@ -335,12 +335,13 @@ class Admin_Model extends CI_Model {
         
     }
     
-    public function addJobRolesItem($name, $description, $status){
+    public function addJobRolesItem($name, $category, $description, $status){
         
         $data = array(
-            'category'    => $name,
-            'description' => $description,
-            'status'      => $status
+            'role'               => $name,
+            'job_category_id'    => $category, 
+            'description'        => $description,
+            'status'             => $status
         );
         
         $insert = $this->db->insert('job_roles', $data);
@@ -368,9 +369,10 @@ class Admin_Model extends CI_Model {
         
     }
     
-    public function addReqListItem($name, $description, $status){
+    public function addReqListItem($name, $category, $description, $status){
         $data = array(
             'name'        => $name,
+            'req_categ'   => $category,
             'description' => $description,
             'status'      => $status
         );
@@ -382,6 +384,42 @@ class Admin_Model extends CI_Model {
         }else{
             return false;
         }
+    }
+    
+    public function jobCategDataJson(){
+        
+        $this->db->where('status', 'active');
+        $query = $this->db->get("job_category");
+        $data = $query->result_array();
+        
+        $result = array(
+            "draw" => $draw,
+            "recordsTotal" => $query->num_rows(),
+            "recordsFiltered" => $query->num_rows(),
+            "data" => $data
+        );
+        
+        
+        return json_encode($result);
+        
+    }
+    
+    public function reqCategDataJson(){
+        
+        $this->db->where('status', 'active');
+        $query = $this->db->get("req_categ_list");
+        $data = $query->result_array();
+        
+        $result = array(
+            "draw" => $draw,
+            "recordsTotal" => $query->num_rows(),
+            "recordsFiltered" => $query->num_rows(),
+            "data" => $data
+        );
+        
+        
+        return json_encode($result);
+        
     }
     
 } 

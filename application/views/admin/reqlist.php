@@ -101,6 +101,7 @@ $(document).ready(function() {
     $('.modal-footer').on('click', '#addItemButtonAdd', function (){
 
     	var itemName        = $("input[name=itemName]").val();
+    	var itemCateg      = $('#itemCateg').val();
     	var itemDescription = $('textarea#itemDescription').val();
     	var itemStatus      = $('#itemStatus').val();
 
@@ -119,6 +120,7 @@ $(document).ready(function() {
             url: "addReqListItem",
             data: { 
             	itemName: itemName,
+            	itemCateg: itemCateg,
             	itemDescription: itemDescription,
             	itemStatus: itemStatus
             },
@@ -179,7 +181,12 @@ $('#item-list').on('click', '#statusToggleButton', function (){
 			<div class="modal-body">
 				<p>
 					<label for="itemName">Item Name:</label> 
-					<input type="text" class="form-control" id="itemName" name="itemName"> 
+					<input type="text" class="form-control" id="itemName" name="itemName">
+					<label for="itemCateg">Requirement Category:</label> <select class="form-control" id="itemCateg" name="itemCateg">
+					    <?php foreach ($data as $reqCateg){
+					        echo '<option value='.$reqCateg['id'].'>'.$reqCateg['name'].'</option>';
+					    } ?>
+					</select>
 					<label for="itemDescription">Description:</label>
 					<textarea class="form-control" rows="5" id="itemDescription" name="itemDescription"></textarea>
 					<label for="itemStatus">Status:</label> <select class="form-control" id="itemStatus" name="itemStatus">

@@ -89,7 +89,11 @@ class Admin extends CI_Controller {
     public function reqList(){
         $this->loginCheck();
         
-        $this->load->view('admin/reqlist');
+        $reqCategories = $this->reqCategListDataJson();
+        $data = json_decode($reqCategories, TRUE);
+        $data['jsonData'] = json_encode($data['data'], JSON_FORCE_OBJECT);
+        
+        $this->load->view('admin/reqlist', $data);
     }
     
     public function jobCateg(){
@@ -101,7 +105,11 @@ class Admin extends CI_Controller {
     public function jobRoles(){
         $this->loginCheck();
         
-        $this->load->view('admin/jobroles');
+        $jobCategories = $this->jobCategDataJson();
+        $data = json_decode($jobCategories, TRUE);
+        $data['jsonData'] = json_encode($data['data'], JSON_FORCE_OBJECT);
+        
+        $this->load->view('admin/jobroles', $data);
     }
     
     
@@ -286,16 +294,18 @@ class Admin extends CI_Controller {
         $this->loginCheck();
         
         $name = "";
+        $category = "";
         $description = "";
         $status = "";
         
         $name = $this->input->post('itemName');
+        $category = $this->input->post('itemCateg');
         $description = $this->input->post('itemDescription');
         $status = $this->input->post('itemStatus');
         
         if ($name !== "") {
             if($status == "active" || $status == "disabled"){
-                $response = $this->Admin_Model->addJobCategItem($name, $description, $status);
+                $response = $this->Admin_Model->addJobRolesItem($name, $category, $description, $status);
             }else{
                 $response = "error: name can't be empty and status should be either 'active' or 'disabled'!";
             }
@@ -339,16 +349,18 @@ class Admin extends CI_Controller {
         $this->loginCheck();
         
         $name = "";
+        $category = "";
         $status = "";
         $description = "";
         
         $name = $this->input->post('itemName');
+        $category = $this->input->post('itemCateg');
         $description = $this->input->post('itemDescription');
         $status = $this->input->post('itemStatus');
         
         if ($name !== "") {
             if($status == "active" || $status == "disabled"){
-                $response = $this->Admin_Model->addReqListItem($name, $description, $status);
+                $response = $this->Admin_Model->addReqListItem($name, $category, $description, $status);
             }else{
                 $response = "error: name can't be empty and status should be either 'active' or 'disabled'!";
             }
@@ -362,6 +374,21 @@ class Admin extends CI_Controller {
         }else {
             echo 'false';
         }
+        
+    }
+    
+    public function jobCategDataJson(){
+        $this->loginCheck();
+        
+        $jsonData = $this->Admin_Model->jobCategDataJson();
+        return $jsonData;
+    }
+    
+    public function reqCategListDataJson(){
+        $this->loginCheck();
+        
+        $jsonData = $this->Admin_Model->reqCategDataJson();
+        return $jsonData;
         
     }
     

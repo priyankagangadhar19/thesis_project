@@ -103,6 +103,7 @@ $(document).ready(function() {
     $('.modal-footer').on('click', '#addItemButtonAdd', function (){
 
     	var itemName        = $("input[name=itemName]").val();
+    	var itemCateg       = $('#itemCateg').val();
     	var itemDescription = $('textarea#itemDescription').val();
     	var itemStatus      = $('#itemStatus').val();
 
@@ -121,6 +122,7 @@ $(document).ready(function() {
             url: "addJobRolesItem",
             data: { 
             	itemName: itemName,
+            	itemCateg: itemCateg,
             	itemDescription: itemDescription,
             	itemStatus: itemStatus
             },
@@ -181,7 +183,12 @@ $('#item-list').on('click', '#statusToggleButton', function (){
 			<div class="modal-body">
 				<p>
 					<label for="itemName">Item Name:</label> 
-					<input type="text" class="form-control" id="itemName" name="itemName"> 
+					<input type="text" class="form-control" id="itemName" name="itemName">
+					<label for="itemCateg">Job Category:</label> <select class="form-control" id="itemCateg" name="itemCateg">
+					    <?php foreach ($data as $jobCateg){
+					        echo '<option value='.$jobCateg['id'].'>'.$jobCateg['category'].'</option>';
+					    } ?>
+					</select> 
 					<label for="itemDescription">Description:</label>
 					<textarea class="form-control" rows="5" id="itemDescription" name="itemDescription"></textarea>
 					<label for="itemStatus">Status:</label> <select class="form-control" id="itemStatus" name="itemStatus">
