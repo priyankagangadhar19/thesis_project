@@ -1,4 +1,6 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
 class Admin extends CI_Controller {
     
     public function __construct(){
@@ -390,6 +392,47 @@ class Admin extends CI_Controller {
         $jsonData = $this->Admin_Model->reqCategDataJson();
         return $jsonData;
         
+    }
+    
+    public function pureJsonJobRoles() {
+        $this->loginCheck();
+        
+        $jsonData = $this->Admin_Model->pureJsonJobRoles();
+        return $jsonData;
+    }
+    
+    public function pureJsonReqList() {
+        $this->loginCheck();
+        
+        $jsonData = $this->Admin_Model->pureJsonReqList();
+        return $jsonData;
+    }
+    
+    public function addData() {
+        $this->loginCheck();
+        
+        $jobRoles = $this->pureJsonJobRoles();
+        $requirements = $this->pureJsonReqList();
+        $jobRoles = json_decode($jobRoles);
+        $requirements = json_decode($requirements);
+        
+        $data['jobRoles'] = (array) $jobRoles;
+        $data['requirements'] = (array) $requirements;
+        
+        $this->load->view("admin/addData", $data);
+    }
+    
+    public function suggestReq() {
+        echo'[
+	{"text": "Afghanistan", "value": "Afghanistan"},
+	{"text": "Albania", "value": "Albania"},
+	{"text": "Algeria", "value": "Algeria"},
+	{"text": "Angola", "value": "Angola"}
+]';
+    }
+    
+    public function saveRawData() {
+       echo "saving page!" ;
     }
     
 }
