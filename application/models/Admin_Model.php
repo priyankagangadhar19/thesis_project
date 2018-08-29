@@ -1,4 +1,6 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
 class Admin_Model extends CI_Model {
     
     public function login($username,$pass) {
@@ -420,6 +422,38 @@ class Admin_Model extends CI_Model {
         
         return json_encode($result);
         
+    }
+    
+    public function pureJsonJobRoles() {
+        $this->db->where('status', 'active');
+        $query = $this->db->get("job_roles");
+        $data = $query->result_array();
+        
+        $result = array(
+            "draw" => $draw,
+            "recordsTotal" => $query->num_rows(),
+            "recordsFiltered" => $query->num_rows(),
+            "data" => $data
+        );
+        
+        
+        return json_encode($result);
+    }
+    
+    public function pureJsonReqList() {
+        $this->db->where('status', 'active');
+        $query = $this->db->get("req_list");
+        $data = $query->result_array();
+        
+        $result = array(
+            "draw" => $draw,
+            "recordsTotal" => $query->num_rows(),
+            "recordsFiltered" => $query->num_rows(),
+            "data" => $data
+        );
+        
+        
+        return json_encode($result);
     }
     
 } 
