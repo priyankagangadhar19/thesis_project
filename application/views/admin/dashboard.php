@@ -11,6 +11,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </head>
   <body>
 
+
+  <nav class="navbar navbar-default">
+      <div class="container-fluid">
+          <div class="navbar-header">
+              <a class="navbar-brand" href="dashboard">ThesisName</a>
+          </div>
+          <ul class="nav navbar-nav">
+              <li class="active"><a href="dashboard">Dashboard</a></li>
+              <li><a href="jobcateg">Job Category</a></li>
+              <li><a href="jobroles">Job Role</a></li>
+              <li><a href="reqcateglist">Req Categ List</a></li>
+              <li><a href="reqlist">Req List</a></li>
+              <li><a href="adddata">Add Data</a></li>
+          </ul>
+      </div>
+  </nav>
+
+
+
 <div class="container">
   <div class="row">
     <div class="col-md-4">
@@ -43,39 +62,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     </div>
     
-    <div class="col-md-4">
-    <table class="table table-bordered table-striped">
-
-
-        <tr>
-          <th colspan="2"><h4 class="text-center">Menu Items</h3></th>
-
-        </tr>
-          <tr>
-            <td>Job Category</td>
-            <td><a href="<?php echo base_url()."admin/jobcateg";?>">link</a></td>
-          </tr>
-          <tr>
-            <td>Job Role</td>
-            <td><a href="<?php echo base_url()."admin/jobroles";?>">link</a></td>
-          </tr>
-          <tr>
-            <td>Req Categ List</td>
-            <td><a href="<?php echo base_url()."admin/reqcateglist";?>">link</a></td>
-          </tr>
-          <tr>
-            <td>Req List</td>
-            <td><a href="<?php echo base_url()."admin/reqlist";?>">link</a></td>
-          </tr>
-          <tr>
-            <td>Add Data</td>
-            <td><a href="<?php echo base_url()."admin/adddata";?>">link</a></td>
-          </tr>
-      </table>
-    </div>
+<!--    <div class="col-md-4">-->
+<!--    <table class="table table-bordered table-striped">-->
+<!---->
+<!---->
+<!--        <tr>-->
+<!--          <th colspan="2"><h4 class="text-center">Menu Items</h3></th>-->
+<!---->
+<!--        </tr>-->
+<!--          <tr>-->
+<!--            <td>Job Category</td>-->
+<!--            <td><a href="--><?php //echo base_url()."admin/jobcateg";?><!--">link</a></td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>Job Role</td>-->
+<!--            <td><a href="--><?php //echo base_url()."admin/jobroles";?><!--">link</a></td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>Req Categ List</td>-->
+<!--            <td><a href="--><?php //echo base_url()."admin/reqcateglist";?><!--">link</a></td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>Req List</td>-->
+<!--            <td><a href="--><?php //echo base_url()."admin/reqlist";?><!--">link</a></td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>Add Data</td>-->
+<!--            <td><a href="--><?php //echo base_url()."admin/adddata";?><!--">link</a></td>-->
+<!--          </tr>-->
+<!--      </table>-->
+<!--    </div>-->
     
   </div>
 <a href="<?php echo base_url('admin/logout');?>" >  <button type="button" class="btn-primary">Logout</button></a>
 </div>
   </body>
+
+<?php include "footer.php"; ?>
 </html>

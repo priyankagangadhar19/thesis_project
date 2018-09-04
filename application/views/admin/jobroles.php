@@ -35,6 +35,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </style>
 
 
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="dashboard">ThesisName</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="dashboard">Dashboard</a></li>
+                <li><a href="jobcateg">Job Category</a></li>
+                <li class="active"><a href="jobroles">Job Role</a></li>
+                <li><a href="reqcateglist">Req Categ List</a></li>
+                <li><a href="reqlist">Req List</a></li>
+                <li><a href="adddata">Add Data</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+
 	<div class="container">
 		<h2>Job Roles</h2>
 
@@ -216,4 +235,5 @@ $('#item-list').on('click', '#statusToggleButton', function (){
 		</div>
 </div>
 
+<?php include "footer.php"; ?>
 </html>
