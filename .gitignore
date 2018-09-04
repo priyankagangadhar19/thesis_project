@@ -33,3 +33,13 @@ application/config/database.php
 .htaccess
 application/controllers/Test.php
 .htaccess
+application/logs/*
+application/config/database.php
+.idea/workspace.xml
+.idea/thesis_project.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/php.xml
+.idea/vcs.xml
+application/config/database.php
+application/config/database.php
