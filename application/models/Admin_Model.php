@@ -8,6 +8,7 @@ class Admin_Model extends CI_Model {
         $this->db->from('user_details');
         $this->db->where('user_name',$username);
         $this->db->where('password',$pass);
+        $this->db->where('role','admin');
         
         if($query=$this->db->get())
         {
