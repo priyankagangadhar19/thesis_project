@@ -21,7 +21,11 @@ class Admin extends CI_Controller {
     
     public function login()
     {
-        $this->load->view("admin/login");
+        if ($this->session->userdata('user_session') !== "active") {
+            $this->load->view("admin/login");
+        }else{
+            return redirect('admin/dashboard');
+        }
         
     }
     
@@ -34,8 +38,9 @@ class Admin extends CI_Controller {
             'user_password'=>md5($this->input->post('user_password'))
             
         );
-        
+        //print_r($user_login); exit;
         $response = $this->Admin_Model->login($user_login['username'],$user_login['user_password']);
+        //print_r($response); exit;
         if($response)
         {
             $this->session->set_userdata('user_id',$response['id']);
@@ -422,17 +427,25 @@ class Admin extends CI_Controller {
         $this->load->view("admin/addData", $data);
     }
     
-    public function suggestReq() {
-        echo'[
-	{"text": "Afghanistan", "value": "Afghanistan"},
-	{"text": "Albania", "value": "Albania"},
-	{"text": "Algeria", "value": "Algeria"},
-	{"text": "Angola", "value": "Angola"}
-]';
-    }
-    
     public function saveRawData() {
-       echo "saving page!" ;
+        $this->loginCheck();
+
+        $jobTitle     = $_POST['jobTitle'];
+        $jobRoleId    = $_POST['jobRole'];
+        $url          = $_POST['url'];
+        $requirements = $_POST['requirements'];
+
+        $requirementsJson = json_encode($requirements);
+
+        $saveData = $this->Admin_Model->saveRawData($jobTitle, $jobRoleId, $url, $requirementsJson);
+
+        if ($saveData == true){
+            echo "Data saved!";
+            return;
+        }else{
+            echo "Error saving data!";
+            return;
+        }
     }
     
 }

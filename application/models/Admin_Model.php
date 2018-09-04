@@ -455,5 +455,23 @@ class Admin_Model extends CI_Model {
         
         return json_encode($result);
     }
+
+    public function saveRawData($jobTitle, $jobRoleId, $url, $requirementsJson) {
+        $data = array(
+            'job_title'    => $jobTitle,
+            'job_role_id'  => $jobRoleId,
+            'url'          => $url,
+            'requirements' => $requirementsJson
+        );
+
+        $insert = $this->db->insert('collected_data', $data);
+
+        if ($insert) {
+            return true;
+        }else{
+            return false;
+        }
+
+    }
     
 } 
