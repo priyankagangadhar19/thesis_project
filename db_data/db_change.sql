@@ -1,0 +1,1 @@
+ALTER TABLE `user_details` CHANGE `role` `role` ENUM('admin','normal') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'normal';
