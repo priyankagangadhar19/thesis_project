@@ -474,5 +474,20 @@ class Admin_Model extends CI_Model {
         }
 
     }
+
+    public function jsonRawData(){
+        $query = $this->db->get("collected_data");
+        $data = $query->result_array();
+
+        $result = array(
+            "draw" => $draw,
+            "recordsTotal" => $query->num_rows(),
+            "recordsFiltered" => $query->num_rows(),
+            "data" => $data
+        );
+
+
+        return json_encode($result);
+    }
     
 } 
