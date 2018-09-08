@@ -5,7 +5,6 @@ class Home extends CI_Controller {
 
         parent::__construct();
         $this->load->model('Admin_Model');
-        $this->load->model('Home_Model');
 
 
     }
@@ -26,17 +25,4 @@ class Home extends CI_Controller {
 
         $this->load->view('home', $data);
     }
-
-    public function getJobRolesByCateg(){
-
-        $catId = $this->input->post('id');
-        $jsonData = $this->Home_Model->getJobRolesByCateg($catId);
-
-        $data = ((array) json_decode($jsonData));
-
-        print_r(json_encode($data['data']));
-        return;
-    }
-
-
 }

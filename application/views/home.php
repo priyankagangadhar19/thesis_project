@@ -45,7 +45,8 @@ $rawData  = $rawData['data'];
                     <h2>Choose a category</h2>
                     <div id="form-step-0" role="form" data-toggle="validator">
                         <div class="form-group">
-                            <select class="form-control" id="jobCateg" name="jobCateg">
+                            <select class="form-control"
+                                                                           id="jobRole" name="jobRole">
                                 <?php foreach ($jobCateg as $categ){echo "<option value=".$categ->id.">".$categ->category."</option>";}?>
                             </select>
                             <div class="help-block with-errors"></div>
@@ -57,7 +58,8 @@ $rawData  = $rawData['data'];
                     <h2>Choose a role</h2>
                     <div id="form-step-1" role="form" data-toggle="validator">
                         <div class="form-group">
-                            <select class="form-control" id="jobRole" name="jobRole">
+                            <select class="form-control"
+                                    id="jobRole" name="jobRole">
                                 <?php foreach ($jobRoles as $role){echo "<option value=".$role->id.">".$role->role."</option>";}?>
                             </select>
                             <div class="help-block with-errors"></div>
@@ -170,29 +172,6 @@ $rawData  = $rawData['data'];
             }else{
                 $('.btn-finish').addClass('disabled');
             }
-        });
-
-
-        $('#jobCateg').on('change', function() {
-            var request = $.ajax({
-                url: "home/getJobRolesByCateg",
-                method: "POST",
-                data: { id : this.value },
-                dataType: "json"
-            });
-
-            request.done(function( msg ) {
-                $('#jobRole').empty();
-                $.each(msg, function(key, value)
-                {
-                    alert(value.role);
-                    $('#jobRole').append('<option value=' + value.id + '>' + value.role + '</option>');
-                })
-            });
-
-            request.fail(function( jqXHR, textStatus ) {
-                alert( "Request failed: " + textStatus );
-            });
         });
 
     });
