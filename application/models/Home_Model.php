@@ -41,9 +41,12 @@ class Home_Model extends CI_Model {
     }
 
     public function getReqList($reqId){
-        $this->db->where('id', $reqId);
-        $this->db->where('status', 'active');
-        $query = $this->db->get("req_list");
+        $this->db->select('req_list.*, req_categ_list.name AS cName');
+        $this->db->from('req_list');
+        $this->db->where('req_list.id', $reqId);
+        $this->db->where('req_list.status', 'active');
+        $this->db->join('req_categ_list', 'req_categ_list.id = req_list.req_categ');
+        $query = $this->db->get();
         $data = $query->result_array();
 
         $result = $data[0];

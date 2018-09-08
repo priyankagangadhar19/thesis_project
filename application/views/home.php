@@ -16,6 +16,10 @@ $rawData  = $rawData['data'];
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script
             src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
 
     <!-- Include SmartWizard CSS -->
     <link href="<?php echo base_url('includes/SmartWizard/dist/css/smart_wizard.css" rel="stylesheet" type="text/css') ?>" />
@@ -222,7 +226,7 @@ $rawData  = $rawData['data'];
                 $('#skillList').empty();
                 $.each(msg.skills, function(key, value)
                 {
-                    $('#skillList').append('  <a target="_blank" href="' + value.id + '" class="btn btn-primary">' + value.name + ' <i class="fas fa-external-link-alt"></i></a>  ');
+                    $('#skillList').append('<div style="float: left; width: 33%; padding: 10px; background: #dedfec; box-sizing: border-box; border: 1px solid #9fa0a9;"><h4>'+value.cName+'</h4> <p>'+value.name+'</p></div>');
                 })
             });
 
