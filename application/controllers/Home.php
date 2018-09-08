@@ -38,5 +38,51 @@ class Home extends CI_Controller {
         return;
     }
 
+    public function getJobsAndSkillByRole(){
+
+        $roleId = $this->input->post('id');
+        $jsonData = $this->Home_Model->getJobsByRole($roleId);
+
+        $data = ((array) json_decode($jsonData));
+        $rawData = (array) $data['data'];
+
+        $reqIdListArray = array();
+        foreach ($rawData as $entry){
+            $reqListIds = $entry->requirements;
+            $reqListArrayRow = $this->explode_brackets("$reqListIds", ",","[", "]");
+            $reqIdListArray = array_merge($reqIdListArray, $reqListArrayRow);
+        }
+
+        $uniqueReqIds = array_unique($reqIdListArray);
+
+        $reqListArray = array();
+        foreach ($uniqueReqIds as $reqId){
+            $reqList = $this->Home_Model->getReqList($reqId);
+            $reqListArray[$reqId] = $reqList;
+        }
+
+        $JobsAndSkills = array();
+        $JobsAndSkills['jobs'] = $rawData;
+        $JobsAndSkills['skills'] = $reqListArray;
+
+        print_r(json_encode($JobsAndSkills));
+        return;
+    }
+
+    public function explode_brackets($reqList, $separator=",", $leftbracket="(", $rightbracket=")", $quotesType = '"') {
+
+        $leftBracketRemoved  = str_replace("$leftbracket","","$reqList");
+        $rightBracketRemoved = str_replace("$rightbracket","","$leftBracketRemoved");
+        $quotesRemoved       = str_replace("$quotesType","","$rightBracketRemoved");
+
+        $finalString = $quotesRemoved;
+
+        $itemsArray = explode(',', $finalString);
+
+        return $itemsArray;
+    }
+
+
+
 
 }

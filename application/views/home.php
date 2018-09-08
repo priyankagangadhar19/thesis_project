@@ -24,6 +24,9 @@ $rawData  = $rawData['data'];
     <link href="<?php echo base_url('includes/SmartWizard/dist/css/smart_wizard_theme_circles.css" rel="stylesheet') ?>" type="text/css" />
     <link href="<?php echo base_url('includes/SmartWizard/dist/css/smart_wizard_theme_arrows.css') ?>" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url('includes/SmartWizard/dist/css/smart_wizard_theme_dots.css') ?>" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+
 </head>
 <body>
 <?php include "nav_bar.php"; ?>
@@ -45,7 +48,8 @@ $rawData  = $rawData['data'];
                     <h2>Choose a category</h2>
                     <div id="form-step-0" role="form" data-toggle="validator">
                         <div class="form-group">
-                            <select class="form-control" id="jobCateg" name="jobCateg">
+                            <select class="form-control" id="jobCateg" name="jobCateg" required="required">
+                                <option value="">select a category</option>
                                 <?php foreach ($jobCateg as $categ){echo "<option value=".$categ->id.">".$categ->category."</option>";}?>
                             </select>
                             <div class="help-block with-errors"></div>
@@ -57,8 +61,8 @@ $rawData  = $rawData['data'];
                     <h2>Choose a role</h2>
                     <div id="form-step-1" role="form" data-toggle="validator">
                         <div class="form-group">
-                            <select class="form-control" id="jobRole" name="jobRole">
-                                <?php foreach ($jobRoles as $role){echo "<option value=".$role->id.">".$role->role."</option>";}?>
+                            <select class="form-control" id="jobRole" name="jobRole" required="required">
+                                <option value="">Choose a role</option>
                             </select>
                             <div class="help-block with-errors"></div>
                         </div>
@@ -69,7 +73,7 @@ $rawData  = $rawData['data'];
                     <div id="form-step-2" role="form" data-toggle="validator">
                         <div class="form-group">
                             <label for="address">These are the most common jobs for you</label>
-                            <p>Job1</p>
+                            <div id="jobList"></div>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -79,7 +83,7 @@ $rawData  = $rawData['data'];
                     <div id="form-step-3" role="form" data-toggle="validator">
                         <div class="form-group">
                             <label for="terms">These are the most preferred skills/qualifications for you</label>
-                            <p>Skill1</p>
+                            <div id="skillList"></div>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -113,10 +117,11 @@ $rawData  = $rawData['data'];
                         elmForm.validator('validate');
                         var elmErr = elmForm.find('.has-error');
                         if(elmErr && elmErr.length > 0){
-                            alert('Oops we still have error in the form');
+                            alert('Oops we are sorry that you couldn`t find what you were looking for!');
+                            elmForm.submit();
                             return false;
                         }else{
-                            alert('Great! we are glad that you found what you were looking for');
+                            alert('Great! we are glad that you found what you were looking for!');
                             elmForm.submit();
                             return false;
                         }
@@ -183,9 +188,9 @@ $rawData  = $rawData['data'];
 
             request.done(function( msg ) {
                 $('#jobRole').empty();
+                $('#jobRole').append('<option value= "">Choose a role</option>');
                 $.each(msg, function(key, value)
                 {
-                    alert(value.role);
                     $('#jobRole').append('<option value=' + value.id + '>' + value.role + '</option>');
                 })
             });
@@ -194,6 +199,40 @@ $rawData  = $rawData['data'];
                 alert( "Request failed: " + textStatus );
             });
         });
+
+
+        $('#jobRole').on('change', function() {
+            var jobListRrequest = $.ajax({
+                url: "home/getJobsAndSkillByRole",
+                method: "POST",
+                data: { id : this.value },
+                dataType: "json"
+            });
+
+            jobListRrequest.done(function( msg ) {
+                if (jQuery.isEmptyObject(msg.jobs)) {
+                        alert('no jobs found in this role!');
+                }
+
+                $('#jobList').empty();
+                $.each(msg.jobs, function(key, value)
+                {
+                    $('#jobList').append('  <a target="_blank" href="' + value.url + '" class="btn btn-primary">' + value.job_title + ' <i class="fas fa-external-link-alt"></i></a>  ');
+                })
+                $('#skillList').empty();
+                $.each(msg.skills, function(key, value)
+                {
+                    $('#skillList').append('  <a target="_blank" href="' + value.id + '" class="btn btn-primary">' + value.name + ' <i class="fas fa-external-link-alt"></i></a>  ');
+                })
+            });
+
+            jobListRrequest.fail(function( jqXHR, textStatus ) {
+                alert( "Job List Request failed: " + textStatus );
+            });
+        });
+
+
+        $('#smartwizard').smartWizard("reset");
 
     });
 </script>
