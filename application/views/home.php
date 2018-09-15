@@ -7,7 +7,7 @@ $rawData  = $rawData['data'];
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Home</title>
+    <title>Homepage</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet"
@@ -21,7 +21,42 @@ $rawData  = $rawData['data'];
     <script type="text/javascript"
             src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
 
-    <!-- Include SmartWizard CSS -->
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  </style>
+</head>
+<body>      
+<!-- Include SmartWizard CSS -->
     <link href="<?php echo base_url('includes/SmartWizard/dist/css/smart_wizard.css" rel="stylesheet" type="text/css') ?>" />
 
     <!-- Optional SmartWizard theme -->
@@ -32,10 +67,39 @@ $rawData  = $rawData['data'];
 
 
 </head>
+
+ <style>
+  .bg-1 { 
+      background-color: #1abc9c;
+      color: #ffffff;
+  }
+  .bg-2 { 
+      background-color: #474e5d;
+      color: #ffffff;
+  }
+ 
+  </style>
+</head>
 <body>
+
 <?php include "nav_bar.php"; ?>
 <div class="container">
-    <br />
+<br />
+<div class="container-fluid bg-1 text-center">
+  <h1>Discover Your Perfect Skills</h1>
+  <p>Career Guidance Based on Priority Ranking Requirements</p> 
+</div>
+  
+<div class="container-fluid bg-2 text-center">
+  <h3>What Am I?</h3>
+  <p>HAPPY BIRTHDAY TO YOU</p>
+</div>
+
+</body>
+</html>
+
+<body>
+</br>
     <form action="#" id="myForm" role="form" data-toggle="validator" method="post" accept-charset="utf-8">
 
         <!-- SmartWizard html -->
@@ -43,7 +107,7 @@ $rawData  = $rawData['data'];
             <ul>
                 <li><a href="#step-1">Step 1<br /><small>Choose Category</small></a></li>
                 <li><a href="#step-2">Step 2<br /><small>Choose Role</small></a></li>
-                <li><a href="#step-3">See Jobs<br /><small>Common Jobs</small></a></li>
+                <li><a href="#step-3">See Jobs<br /><small>Jobs Links</small></a></li>
                 <li><a href="#step-4">See Skills<br /><small>Most Preferred Skills</small></a></li>
             </ul>
 
@@ -243,3 +307,7 @@ $rawData  = $rawData['data'];
 </body>
 <?php include "footer.php"; ?>
 </html>
+
+<footer class="container-fluid text-center">
+  <p>All Rights Reserved</p>
+</footer>

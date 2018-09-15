@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /thesis/thesis_project
+RewriteBase /Thesis3
 
 RewriteCond %{REQUEST_URI} ^system.*
 RewriteRule ^(.*)$ /index.php?/$1 [L]
