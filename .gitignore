@@ -43,3 +43,5 @@ application/config/database.php
 .idea/vcs.xml
 application/config/database.php
 application/config/database.php
+.htaccess
+application/config/database.php
