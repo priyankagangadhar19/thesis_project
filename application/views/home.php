@@ -43,8 +43,9 @@ $rawData  = $rawData['data'];
             <ul>
                 <li><a href="#step-1">Step 1<br /><small>Choose Category</small></a></li>
                 <li><a href="#step-2">Step 2<br /><small>Choose Role</small></a></li>
-                <li><a href="#step-3">See Jobs<br /><small>Common Jobs</small></a></li>
-                <li><a href="#step-4">See Skills<br /><small>Most Preferred Skills</small></a></li>
+                <li><a href="#step-3">See Skills<br /><small>Common Skills</small></a></li>
+                <li><a href="#step-4">See Most Preferred<br /><small>Most Preferred Skills</small></a></li>
+                <li><a href="#step-5">Top Skills<br /><small>These are to ranked Skills</small></a></li>
             </ul>
 
             <div>
@@ -73,21 +74,34 @@ $rawData  = $rawData['data'];
                     </div>
                 </div>
                 <div id="step-3">
-                    <h2>Common jobs</h2>
+                    <h2>Preferred Skills</h2>
                     <div id="form-step-2" role="form" data-toggle="validator">
                         <div class="form-group">
-                            <label for="address">These are the most common jobs for you</label>
-                            <div id="jobList"></div>
+                            <label for="address">These are the skills/qualifications you must have</label>
+                            <div id="skillList"></div>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
                 </div>
                 <div id="step-4" class="">
-                    <h2>Preferred Skills</h2>
+                    <h2>Most Preferred Skills</h2>
                     <div id="form-step-3" role="form" data-toggle="validator">
                         <div class="form-group">
                             <label for="terms">These are the most preferred skills/qualifications for you</label>
-                            <div id="skillList"></div>
+                            <div id="mostPrefList"></div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div id="step-5" class="">
+                    <h2>Top Ranked Skills</h2>
+                    <div id="form-step-4" role="form" data-toggle="validator">
+                        <div class="form-group">
+                            <label for="terms">These are the top ranked skills/qualifications for you</label>
+                            <ul id="topRankedSkills" class="list-group">
+                            </ul>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -206,33 +220,82 @@ $rawData  = $rawData['data'];
 
 
         $('#jobRole').on('change', function() {
-            var jobListRrequest = $.ajax({
-                url: "home/getJobsAndSkillByRole",
+            var reqListAndCategJson = $.ajax({
+                url: "home/reqListAndCategJson",
                 method: "POST",
                 data: { id : this.value },
                 dataType: "json"
             });
 
-            jobListRrequest.done(function( msg ) {
-                if (jQuery.isEmptyObject(msg.jobs)) {
-                        alert('no jobs found in this role!');
+            reqListAndCategJson.done(function( msg ) {
+                //console.log(msg); return;
+                if (jQuery.isEmptyObject(msg)) {
+                        alert('no items found in this role!');
                 }
 
-                $('#jobList').empty();
-                $.each(msg.jobs, function(key, value)
-                {
-                    $('#jobList').append('  <a target="_blank" href="' + value.url + '" class="btn btn-primary">' + value.job_title + ' <i class="fas fa-external-link-alt"></i></a>  ');
-                })
                 $('#skillList').empty();
-                $.each(msg.skills, function(key, value)
+                $.each(msg, function(key, value)
                 {
-                    $('#skillList').append('<div style="float: left; width: 33%; padding: 10px; background: #dedfec; box-sizing: border-box; border: 1px solid #9fa0a9;"><h4>'+value.cName+'</h4> <p>'+value.name+'</p></div>');
+                    $('#skillList').append('<div style="float: left; width: 33%; padding: 10px; background: #dedfec; box-sizing: border-box; border: 1px solid #9fa0a9;"><h4>'+key+'</h4> <p>'+value+'</p></div>');
                 })
             });
 
-            jobListRrequest.fail(function( jqXHR, textStatus ) {
-                alert( "Job List Request failed: " + textStatus );
+            reqListAndCategJson.fail(function( jqXHR, textStatus ) {
+                alert( "Request failed: " + textStatus );
             });
+
+
+            var mostPrefjson = $.ajax({
+                url: "home/mostPrefjson",
+                method: "POST",
+                data: { id : this.value },
+                dataType: "json"
+            });
+
+            mostPrefjson.done(function( msg ) {
+                //console.log(msg); return;
+                if (jQuery.isEmptyObject(msg)) {
+                    alert('no items found in this role!');
+                }
+
+                $('#mostPrefList').empty();
+                $.each(msg, function(key, value)
+                {
+                    $('#mostPrefList').append('<div style="float: left; width: 33%; padding: 10px; background: #dedfec; box-sizing: border-box; border: 1px solid #9fa0a9;"><h4>'+key+'</h4> <p>'+value+'</p></div>');
+                })
+            });
+
+            mostPrefjson.fail(function( jqXHR, textStatus ) {
+                alert( "Request failed: " + textStatus );
+            });
+
+
+            var topRankedSkillsJson = $.ajax({
+                url: "home/topRankedSkillsJson",
+                method: "POST",
+                data: { id : this.value },
+                dataType: "json"
+            });
+
+            topRankedSkillsJson.done(function( msg ) {
+                //console.log(msg); return;
+                if (jQuery.isEmptyObject(msg)) {
+                    alert('no items found in this role!');
+                }
+
+                $('#topRankedSkills').empty();
+                $.each(msg, function(key, value)
+                {
+                    $('#topRankedSkills').append('<li class="list-group-item d-flex justify-content-between align-items-center">'+value.name+'<span class="badge badge-primary badge-pill">'+value.repeated+'</span></li>');
+                })
+            });
+
+            topRankedSkillsJson.fail(function( jqXHR, textStatus ) {
+                alert( "Request failed: " + textStatus );
+            });
+
+
+
         });
 
 
