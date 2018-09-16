@@ -465,6 +465,7 @@ class Admin_Model extends CI_Model {
             'requirements' => $requirementsJson
         );
 
+        $this->db->set('datetime', 'NOW()', FALSE);
         $insert = $this->db->insert('collected_data', $data);
 
         if ($insert) {

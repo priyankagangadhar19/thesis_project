@@ -54,5 +54,50 @@ class Home_Model extends CI_Model {
         return $result;
     }
 
+    public function getReqListByRole($roleId){
+        $this->db->select('requirements');
+        $this->db->where('job_role_id', $roleId);
+        $query = $this->db->get("collected_data");
+        $data = $query->result_array();
+
+
+        $result = $data;
+
+        return $result;
+    }
+
+    public function getCategId($reqId){
+        $this->db->select('req_categ');
+        $this->db->where('id', $reqId);
+        $query = $this->db->get("req_list");
+        $data = $query->result_array();
+
+        $result = $data[0]['req_categ'];
+
+        return $result;
+    }
+
+    public function getCategName($CatId){
+        $this->db->select('name');
+        $this->db->where('id', $CatId);
+        $query = $this->db->get("req_categ_list");
+        $data = $query->result_array();
+
+        $result = $data[0]['name'];
+
+        return $result;
+    }
+
+    public function getReqName($reqId){
+        $this->db->select('name');
+        $this->db->where('id', $reqId);
+        $query = $this->db->get("req_list");
+        $data = $query->result_array();
+
+        $result = $data[0]['name'];
+
+        return $result;
+    }
+
 
 }
