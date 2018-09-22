@@ -201,8 +201,8 @@ class Home extends CI_Controller {
     }
 
     public function topRankedSkillsJson(){
-        $roleId = $this->input->post('id');
-        $repeatThreshold = 1;
+            $roleId = $this->input->post('id');
+        $repeatThreshold = 1; //Change this value to change minimum repeat number of a skill.
         $repeatCount = $this->getSkillCountArray($roleId);
 
         $data = array();

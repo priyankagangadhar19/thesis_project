@@ -20,6 +20,8 @@ $rawData  = $rawData['data'];
           href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
     <script type="text/javascript"
             src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
+            
+     
 
     <!-- Include SmartWizard CSS -->
     <link href="<?php echo base_url('includes/SmartWizard/dist/css/smart_wizard.css" rel="stylesheet" type="text/css') ?>" />
@@ -30,15 +32,43 @@ $rawData  = $rawData['data'];
     <link href="<?php echo base_url('includes/SmartWizard/dist/css/smart_wizard_theme_dots.css') ?>" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-
 </head>
+
+<style>
+  .bg-1 { 
+      background-color: #1abc9c;
+      color: #ffffff;
+  }
+  .bg-2 { 
+      background-color: #474e5d;
+      color: #ffffff;
+  }
+  .bg-3 { 
+      background-color:  #F5F5F5; /* White */
+      color: #555555;
+      }
+      .bg-4 { 
+      background-color:  #D3D3D3; /* Dimgrey */
+      color: #555555;
+      }
+  </style>  
 <body>
 <?php include "nav_bar.php"; ?>
 <div class="container">
     <br />
-    <form action="#" id="myForm" role="form" data-toggle="validator" method="post" accept-charset="utf-8">
-
-        <!-- SmartWizard html -->
+   
+    <div class="container-fluid bg-1 text-center">
+  <h1>Discover Your Perfect Skills</h1>
+  <p>Career Guidance Based on Priority Ranking Requirements</p> 
+</div>
+<div class="container-fluid bg-2 text-center">
+  <h3>What Am I?</h3>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+</div>
+</br>
+</br>
+<form action="#" id="myForm" role="form" data-toggle="validator" method="post" accept-charset="utf-8">
+    <!-- SmartWizard html -->
         <div id="smartwizard">
             <ul>
                 <li><a href="#step-1">Step 1<br /><small>Choose Category</small></a></li>
@@ -112,9 +142,7 @@ $rawData  = $rawData['data'];
         </div>
 
     </form>
-
 </div>
-
 <!-- Include jQuery Validator plugin -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
 
@@ -304,5 +332,30 @@ $rawData  = $rawData['data'];
     });
 </script>
 </body>
+</br>
+</br>
+<!-- Third Container (Grid) -->
+<div class="container-fluid bg-3 text-center">    
+  <h3 class="margin">What do I do?</h3><br>
+  </br>
+  </br>
+  <div class="row">
+    <div class="col-sm-4">
+      <h4>COMMON SKILLS</h4>
+      <p>Accurately understand how to enhance your technical strengths and skills. Select the perfect step for your career.We recommend technical skills which are prioritized and you assess your strengths and align them for your career choice. Know your strengths and weaknesses.</p>
+    </div>
+    <div class="col-sm-4"> 
+          <h4>MOST PREFERRED SKILLS</h4>
+          <P>Get to know the most preferred skills suitble for the job roles of your dream. This is based on the analysis we provide from numerous job posting, we show the most preferred skills which you can work towards before entering the technical field of your choice.</P>      
+    </div>
+    <div class="col-sm-4"> 
+          <h4>TOP SKILLS</h4>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+  </div>
+</div>
+</br>
+</br>
+</br>
 <?php include "footer.php"; ?>
 </html>
