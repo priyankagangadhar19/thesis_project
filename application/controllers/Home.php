@@ -119,7 +119,7 @@ class Home extends CI_Controller {
         foreach ($processList as $catId => $reqIds){
             $catName = $this->Home_Model->getCategName($catId);
             foreach ($reqIds as $reqId){
-                $finalList[$catName][] = $reqName = $this->Home_Model->getReqName($reqId);
+                $finalList[$catName][] = $reqName = " ".$this->Home_Model->getReqName($reqId);
             }
         }
 

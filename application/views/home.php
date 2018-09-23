@@ -51,98 +51,8 @@ $rawData  = $rawData['data'];
       background-color:  #D3D3D3; /* Dimgrey */
       color: #555555;
       }
-  </style>  
-<body>
-<?php include "nav_bar.php"; ?>
-<div class="container">
-    <br />
-   
-    <div class="container-fluid bg-1 text-center">
-  <h1>Discover Your Perfect Skills</h1>
-  <p>Career Guidance Based on Priority Ranking Requirements</p> 
-</div>
-<div class="container-fluid bg-2 text-center">
-  <h3>What Am I?</h3>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-</div>
-</br>
-</br>
-<form action="#" id="myForm" role="form" data-toggle="validator" method="post" accept-charset="utf-8">
-    <!-- SmartWizard html -->
-        <div id="smartwizard">
-            <ul>
-                <li><a href="#step-1">Step 1<br /><small>Choose Category</small></a></li>
-                <li><a href="#step-2">Step 2<br /><small>Choose Role</small></a></li>
-                <li><a href="#step-3">See Skills<br /><small>Common Skills</small></a></li>
-                <li><a href="#step-4">See Most Preferred<br /><small>Most Preferred Skills</small></a></li>
-                <li><a href="#step-5">Top Skills<br /><small>These are to ranked Skills</small></a></li>
-            </ul>
+  </style>
 
-            <div>
-                <div id="step-1">
-                    <h2>Choose a category</h2>
-                    <div id="form-step-0" role="form" data-toggle="validator">
-                        <div class="form-group">
-                            <select class="form-control" id="jobCateg" name="jobCateg" required="required">
-                                <option value="">select a category</option>
-                                <?php foreach ($jobCateg as $categ){echo "<option value=".$categ->id.">".$categ->category."</option>";}?>
-                            </select>
-                            <div class="help-block with-errors"></div>
-                        </div>
-                    </div>
-
-                </div>
-                <div id="step-2">
-                    <h2>Choose a role</h2>
-                    <div id="form-step-1" role="form" data-toggle="validator">
-                        <div class="form-group">
-                            <select class="form-control" id="jobRole" name="jobRole" required="required">
-                                <option value="">Choose a role</option>
-                            </select>
-                            <div class="help-block with-errors"></div>
-                        </div>
-                    </div>
-                </div>
-                <div id="step-3">
-                    <h2>Preferred Skills</h2>
-                    <div id="form-step-2" role="form" data-toggle="validator">
-                        <div class="form-group">
-                            <label for="address">These are the skills/qualifications you must have</label>
-                            <div id="skillList"></div>
-                            <div class="help-block with-errors"></div>
-                        </div>
-                    </div>
-                </div>
-                <div id="step-4" class="">
-                    <h2>Most Preferred Skills</h2>
-                    <div id="form-step-3" role="form" data-toggle="validator">
-                        <div class="form-group">
-                            <label for="terms">These are the most preferred skills/qualifications for you</label>
-                            <div id="mostPrefList"></div>
-                            <div class="help-block with-errors"></div>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div id="step-5" class="">
-                    <h2>Top Ranked Skills</h2>
-                    <div id="form-step-4" role="form" data-toggle="validator">
-                        <div class="form-group">
-                            <label for="terms">These are the top ranked skills/qualifications for you</label>
-                            <ul id="topRankedSkills" class="list-group">
-                            </ul>
-                            <div class="help-block with-errors"></div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-
-    </form>
-</div>
 <!-- Include jQuery Validator plugin -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
 
@@ -152,6 +62,14 @@ $rawData  = $rawData['data'];
 
 <script type="text/javascript">
     $(document).ready(function(){
+
+        $("tooltip").tooltip('enable');
+
+        $('#whatAppDoText').hover(function() {
+            $('html, body').animate({
+                scrollTop: $(this).offset().top + $(this).outerHeight()
+            }, 2000);
+        });
 
         // Toolbar extra buttons
         var btnFinish = $('<button></button>').text('Finish')
@@ -248,6 +166,9 @@ $rawData  = $rawData['data'];
 
 
         $('#jobRole').on('change', function() {
+
+            $("#roleName_1, #roleName_2").html($("#jobRole option:selected").text());
+
             var reqListAndCategJson = $.ajax({
                 url: "home/reqListAndCategJson",
                 method: "POST",
@@ -258,13 +179,13 @@ $rawData  = $rawData['data'];
             reqListAndCategJson.done(function( msg ) {
                 //console.log(msg); return;
                 if (jQuery.isEmptyObject(msg)) {
-                        alert('no items found in this role!');
+                    alert('no items found in this role!');
                 }
 
                 $('#skillList').empty();
                 $.each(msg, function(key, value)
                 {
-                    $('#skillList').append('<div style="float: left; width: 33%; padding: 10px; background: #dedfec; box-sizing: border-box; border: 1px solid #9fa0a9;"><h4>'+key+'</h4> <p>'+value+'</p></div>');
+                    $('#skillList').append('<div style="float: left; width: 33%; padding: 10px; background: #dedfec; box-sizing: border-box; border: 1px solid #9fa0a9;"><h4>'+key+'</h4> <p>'+ value +'</p></div>');
                 })
             });
 
@@ -312,9 +233,21 @@ $rawData  = $rawData['data'];
                 }
 
                 $('#topRankedSkills').empty();
+                var i = 1;
                 $.each(msg, function(key, value)
                 {
-                    $('#topRankedSkills').append('<li class="list-group-item d-flex justify-content-between align-items-center">'+value.name+'<span class="badge badge-primary badge-pill">'+value.repeated+'</span></li>');
+                    if (i == 1){
+                        var rankInfoText = 'occupy the '+i+'st rank!';
+                    }else if (i == 2){
+                        var rankInfoText = 'occupy the '+i+'nd rank!';
+                    }else if (i == 3){
+                        var rankInfoText = 'occupy the '+i+'rd rank!';
+                    } else{
+                        var rankInfoText = 'occupy the '+i+'th rank!';
+                    }
+                    $('#topRankedSkills').append('<b><li class="list-group-item d-flex justify-content-between align-items-center">'+value.name+' '+rankInfoText+'</b><span data-toggle="tooltip" data-html="true" title="<em>Repeated '+value.repeated+' times on job postings and other resources that we analysed!</em>" class="badge badge-primary badge-pill tooltipInfo">'+value.repeated+'</span></li>');
+                    $(".tooltipInfo").tooltip('enable');
+                    i++;
                 })
             });
 
@@ -331,12 +264,104 @@ $rawData  = $rawData['data'];
 
     });
 </script>
-</body>
+<body>
+<?php include "nav_bar.php"; ?>
+<div class="container">
+    <br />
+
+    <div class="row">
+    <div class="col-lg-12 bg-1 text-center">
+  <h1>Discover The Skills You Must Have!</h1>
+  <p>Career Guidance System Based on Most Demanded Skills</p>
+</div>
+    </div>
+    <div class="row">
+<div class="col-lg-12 bg-2 text-center">
+  <h3>How it works?</h3>
+  <p>Our smart algorithm scans job portals and other online resources for most demanded skills and qualifications for each role.</p>
+</div>
+    </div>
 </br>
 </br>
+<form action="#" id="myForm" role="form" data-toggle="validator" method="post" accept-charset="utf-8">
+    <!-- SmartWizard html -->
+        <div id="smartwizard">
+            <ul>
+                <li><a href="#step-1">Step 1<br /><small>Choose Category</small></a></li>
+                <li><a href="#step-2">Step 2<br /><small>Choose Role</small></a></li>
+                <li><a href="#step-3">See Skills<br /><small>Common Skills</small></a></li>
+                <li><a href="#step-4">See Most Preferred<br /><small>Most Preferred Skills</small></a></li>
+                <li><a href="#step-5">Top Skills<br /><small>These are to ranked Skills</small></a></li>
+            </ul>
+
+            <div>
+                <div id="step-1">
+                    <h2>Choose a category</h2>
+                    <div id="form-step-0" role="form" data-toggle="validator">
+                        <div class="form-group">
+                            <select class="form-control" id="jobCateg" name="jobCateg" required="required">
+                                <option value="">select a category</option>
+                                <?php foreach ($jobCateg as $categ){echo "<option value=".$categ->id.">".$categ->category."</option>";}?>
+                            </select>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="step-2">
+                    <h2>Choose a role</h2>
+                    <div id="form-step-1" role="form" data-toggle="validator">
+                        <div class="form-group">
+                            <select class="form-control" id="jobRole" name="jobRole" required="required">
+                                <option value="">Choose a role</option>
+                            </select>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="step-3">
+                    <h2>Common Skills for <i id="roleName_1"></i></h2>
+                    <div id="form-step-2" role="form" data-toggle="validator">
+                        <div class="form-group">
+                            <label for="address">These are the skills/qualifications you must have</label> <tooltip data-toggle="tooltip" data-html="true" title="<em>Our application scans job portals and other resources for your selected job role and we extracted the common skills that you must have for this role you selected!</em>" class="fas fa-info-circle fa-1x"></tooltip>
+                            <div id="skillList"></div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="step-4" class="">
+                    <h2>Most Demanded Skills by Category for <i id="roleName_2"></i></h2>
+                    <div id="form-step-3" role="form" data-toggle="validator">
+                        <div class="form-group">
+                            <label for="terms">These are the most demanded skills/qualifications for you</label> <tooltip data-html="true" title="<em>Out of all information we analysed, these are the most demanded abilities on market for every classification we showed.</em>" class="fas fa-info-circle fa-1x"></tooltip>
+                            <div id="mostPrefList"></div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div id="step-5" class="">
+                    <h2>Top Ranked Skills</h2>
+                    <div id="form-step-4" role="form" data-toggle="validator">
+                        <div class="form-group">
+                            <label for="terms">These are the top ranked skills/qualifications for you</label> <tooltip data-toggle="tooltip" data-html="true" title="<em>We analysed total skills and abilities that are demanded for this role you selected and this is a list of them sorted and ranked in such a way that, top skill is the most repeated on job postings and other resources out of all categories!</em>" class="fas fa-info-circle fa-1x"></tooltip>
+                            <ul id="topRankedSkills" class="list-group">
+                            </ul>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
 <!-- Third Container (Grid) -->
 <div class="container-fluid bg-3 text-center">    
-  <h3 class="margin">What do I do?</h3><br>
+  <h3 id="whatAppDoText" class="margin">What This App Can Do?</h3><br>
   </br>
   </br>
   <div class="row">
@@ -345,17 +370,16 @@ $rawData  = $rawData['data'];
       <p>Accurately understand how to enhance your technical strengths and skills. Select the perfect step for your career.We recommend technical skills which are prioritized and you assess your strengths and align them for your career choice. Know your strengths and weaknesses.</p>
     </div>
     <div class="col-sm-4"> 
-          <h4>MOST PREFERRED SKILLS</h4>
+          <h4>MOST DEMANDED SKILLS</h4>
           <P>Get to know the most preferred skills suitble for the job roles of your dream. This is based on the analysis we provide from numerous job posting, we show the most preferred skills which you can work towards before entering the technical field of your choice.</P>      
     </div>
     <div class="col-sm-4"> 
-          <h4>TOP SKILLS</h4>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <h4>TOP RANKED SKILLS</h4>
+      <p>We analyze total skills and abilities that are demanded for a role you select makes a list of them sorted and ranked in such a way that, top skill is the most repeated on job postings and other resources out of all categories!</p>
     </div>
   </div>
 </div>
-</br>
-</br>
-</br>
 <?php include "footer.php"; ?>
+
+</body>
 </html>
