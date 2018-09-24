@@ -51,6 +51,99 @@ $rawData  = $rawData['data'];
       background-color:  #D3D3D3; /* Dimgrey */
       color: #555555;
       }
+  i.icon-2x {
+      font-size: 30px;
+  }
+
+  .color-light{
+      color:#FFFFFF;
+  }
+
+  /*Colored Content Boxes
+  ------------------------------------*/
+  .servive-block {
+      padding: 20px 30px;
+      text-align: center;
+      margin-bottom: 20px;
+  }
+
+  .servive-block p,
+  .servive-block h2 {
+      color: #fff;
+  }
+
+  .servive-block h2 a:hover{
+      text-decoration: none;
+  }
+
+  .servive-block-light,
+  .servive-block-default {
+      background: #fafafa;
+      border: solid 1px #eee;
+  }
+
+  .servive-block-default:hover {
+      box-shadow: 0 0 8px #eee;
+  }
+
+  .servive-block-light p,
+  .servive-block-light h2,
+  .servive-block-default p,
+  .servive-block-default h2 {
+      color: #555;
+  }
+
+  .servive-block-u {
+      background: #72c02c;
+  }
+  .servive-block-blue {
+      background: #3498db;
+  }
+  .servive-block-red {
+      background: #e74c3c;
+  }
+  .servive-block-sea {
+      background: #1abc9c;
+  }
+  .servive-block-grey {
+      background: #95a5a6;
+  }
+  .servive-block-yellow {
+      background: #f1c40f;
+  }
+  .servive-block-orange {
+      background: #e67e22;
+  }
+  .servive-block-green {
+      background: #2ecc71;
+  }
+  .servive-block-purple {
+      background: #9b6bcc;
+  }
+  .servive-block-aqua {
+      background: #27d7e7;
+  }
+  .servive-block-brown {
+      background: #9c8061;
+  }
+  .servive-block-dark-blue {
+      background: #4765a0;
+  }
+  .servive-block-light-green {
+      background: #79d5b3;
+  }
+  .servive-block-dark {
+      background: #555;
+  }
+  .servive-block-light {
+      background: #ecf0f1;
+  }
+  .servive-block-realgreen {
+      background: #5cbd9c;
+  }
+  .servive-block-mostdemanded {
+      background: #aebd5c;
+  }
   </style>
 
 <!-- Include jQuery Validator plugin -->
@@ -185,7 +278,7 @@ $rawData  = $rawData['data'];
                 $('#skillList').empty();
                 $.each(msg, function(key, value)
                 {
-                    $('#skillList').append('<div style="float: left; width: 33%; padding: 10px; background: #dedfec; box-sizing: border-box; border: 1px solid #9fa0a9;"><h4>'+key+'</h4> <p>'+ value +'</p></div>');
+                    $('#skillList').append('<div class="servive-block rounded servive-block-realgreen"><h2 class="heading-md">'+key+'</h2><h3>'+value+'</h3></div>');
                 })
             });
 
@@ -210,7 +303,7 @@ $rawData  = $rawData['data'];
                 $('#mostPrefList').empty();
                 $.each(msg, function(key, value)
                 {
-                    $('#mostPrefList').append('<div style="float: left; width: 33%; padding: 10px; background: #dedfec; box-sizing: border-box; border: 1px solid #9fa0a9;"><h4>'+key+'</h4> <p>'+value+'</p></div>');
+                    $('#mostPrefList').append('<div class="servive-block rounded servive-block-mostdemanded"><h2 class="heading-md">'+key+'</h2><h3>'+value+'</h3></div>');
                 })
             });
 
